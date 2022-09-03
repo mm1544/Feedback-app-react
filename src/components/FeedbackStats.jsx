@@ -1,8 +1,12 @@
 // rfce - React Functional Export Component
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useContext } from 'react'
+//  Var to use Context
+import FeedbackContext from '../context/FeedbackContext'
 
-function FeedbackStats({feedback}) {
+function FeedbackStats() {
+    // Pulling feedback from the context
+    const {feedback} = useContext(FeedbackContext)
 
     // Calculate ratings avg
     let average = feedback.reduce((acc, cur) => {
@@ -21,8 +25,5 @@ function FeedbackStats({feedback}) {
   )
 }
 
-FeedbackStats.propTypes = {
-    feedback: PropTypes.array.isRequired
-}
 
 export default FeedbackStats

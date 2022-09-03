@@ -1,8 +1,18 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useContext, useEffect} from 'react'
+//  Var to use Context
+import FeedbackContext from '../context/FeedbackContext'
 
 function RatingSelect({select}) {
     const [selected, setSelected] = useState(10)
+
+    // Pulling feedback (and other stuff) from the context.
+    // 'feedbackEdit' is a state
+    const {feedbackEdit} = useContext(FeedbackContext)
+
+    useEffect(() => {
+        setSelected(feedbackEdit.item.rating)
+    }, [feedbackEdit])
 
     const handleChange = (e) => {
         // In this case we can change string to number by adding '+' in fron of variable

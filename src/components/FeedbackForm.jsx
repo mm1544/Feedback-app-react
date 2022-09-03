@@ -1,12 +1,31 @@
 import React from 'react'
-// Setting a 'peace' of state for text input
-import { useState } from 'react'
+// useState is for Setting a 'peace' of state
+// Whenever "feedbackEdit" state changes (when we click EDIT button), we want certain things to happen - i.e. we want form to get filled with text etc. --> This is called an effect (or side-effect), and the way we deal with effects in functional components with hooks is by using special hook "useEffect".
+import { useState, useContext, useEffect } from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button'
 import RatingSelect from './RatingSelect'
+//  Var to use Context
+import FeedbackContext from '../context/FeedbackContext'
 
 
-function FeedbackForm({handleAdd}) {
+function FeedbackForm() {
+    // Pulling feedback (and other stuff) from the context.
+    // 'feedbackEdit' is a state
+    const {addFeedback, feedbackEdit, updateFeedback} = useContext(FeedbackContext)
+
+    // Second parameter is an array of dependancies - when any of them changes, then 'useEffect' will be runned.
+    // If you will leave '[]' empty 'useEffect' will run when component(?) loads
+    useEffect(() => {
+        // Checking if state has something in it, because we don't want code to run when component loads
+        if (feedbackEdit.edit === true) {
+            setBtnDisabled(false)
+            setText(feedbackEdit.item.text)
+            setRating(feedbackEdit.item.rating)
+        } 
+    }, [feedbackEdit])
+
+    // That is a local-component state
     const [text, setText] = useState('')
     const [rating, setRating] = useState(10)
     const [btnDisabled, setBtnDisabled] = useState(true)
@@ -19,7 +38,7 @@ function FeedbackForm({handleAdd}) {
         if(text === '') {
             setBtnDisabled(true)
             setMessage(null)
-        } else if(text !== '' && text.trim().length < 10) {
+        } else if (text !== '' && text.trim().length <= 10) {
             setMessage('Text must be at least 10 characters')
             setBtnDisabled(true)
         } else {
@@ -33,13 +52,17 @@ function FeedbackForm({handleAdd}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(text.trim().length >= 10) {
+        if (text.trim().length > 10) {
             const newFeedback = {
                 text,
-                rating
+                rating,
             }
 
-            handleAdd(newFeedback)
+            if(feedbackEdit.edit === true) {
+                updateFeedback(feedbackEdit.item.id, newFeedback)
+            } else {
+                addFeedback(newFeedback)
+            }
             // To clear text after submitting Form
             setText('')
         }
