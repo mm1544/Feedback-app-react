@@ -34,7 +34,7 @@ function FeedbackForm() {
     // To connect input field to the state we will use this function
     // Takes in EVENT parameter
     const handleTextChange = (e) => {
-        // Validation will be runed everytime we tipe anything in
+        // Validation will be runed everytime we type anything in
         if(text === '') {
             setBtnDisabled(true)
             setMessage(null)
@@ -60,6 +60,8 @@ function FeedbackForm() {
 
             if(feedbackEdit.edit === true) {
                 updateFeedback(feedbackEdit.item.id, newFeedback)
+                // Edited mm
+                setBtnDisabled(true)
             } else {
                 addFeedback(newFeedback)
             }

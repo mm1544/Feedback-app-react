@@ -49,6 +49,13 @@ export const FeedbackProvider = ({ children }) => {
     setFeedback(
       feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
     )
+
+    // To clear feedbackEdit state
+    setFeedbackEdit({
+      item: {},
+      // when we click "edit" icon, edit var will be set to True - meaning that we are in "editing" mode. If it is not clicked, then it will be set to False.
+      edit: false,
+    })
   }
 
   // Set item to be updated
