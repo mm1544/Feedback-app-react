@@ -22,7 +22,7 @@ function FeedbackForm() {
             setBtnDisabled(false)
             setText(feedbackEdit.item.text)
             setRating(feedbackEdit.item.rating)
-        } 
+        }
     }, [feedbackEdit])
 
     // That is a local-component state

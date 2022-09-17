@@ -11,7 +11,11 @@ function RatingSelect({select}) {
     const {feedbackEdit} = useContext(FeedbackContext)
 
     useEffect(() => {
+        // if (feedbackEdit.edit === false) {
+        //     setSelected(10)
+        // } else
         setSelected(feedbackEdit.item.rating)
+        // console.log("executed setSelected(feedbackEdit.item.rating)")
     }, [feedbackEdit])
 
     const handleChange = (e) => {
